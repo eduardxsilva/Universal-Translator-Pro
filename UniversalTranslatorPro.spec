@@ -1,0 +1,90 @@
+# -*- mode: python ; coding: utf-8 -*-
+from pathlib import Path
+
+project_root = Path(SPECPATH)
+src_dir = project_root / "src"
+
+block_cipher = None
+
+a = Analysis(
+    [str(project_root / "main.py")],
+    pathex=[str(src_dir), str(project_root)],
+    binaries=[],
+    datas=[
+        (str(project_root / "assets" / "icon.ico"), "assets"),
+        (str(project_root / "README.md"), "."),
+    ],
+    hiddenimports=[
+        "universal_translator",
+        "universal_translator.main",
+        "universal_translator.domain",
+        "universal_translator.application",
+        "universal_translator.application.orchestrator",
+        "universal_translator.application.auto_monitor",
+        "universal_translator.infrastructure",
+        "universal_translator.infrastructure.providers",
+        "universal_translator.infrastructure.providers.deepl_provider",
+        "universal_translator.infrastructure.providers.google_gtx_provider",
+        "universal_translator.infrastructure.providers.google_provider",
+        "universal_translator.infrastructure.providers.microsoft_provider",
+        "universal_translator.infrastructure.providers.openai_provider",
+        "universal_translator.infrastructure.providers.offline_fallback_provider",
+        "universal_translator.infrastructure.clipboard.safe_clipboard_engine",
+        "universal_translator.infrastructure.windows.win32_inspector",
+        "universal_translator.infrastructure.windows.startup_manager",
+        "universal_translator.infrastructure.accessibility.ui_automation_adapter",
+        "universal_translator.infrastructure.persistence.sqlite_repository",
+        "universal_translator.infrastructure.persistence.usage_tracker",
+        "universal_translator.infrastructure.security.credential_manager",
+        "universal_translator.infrastructure.logging.logger",
+        "universal_translator.presentation.windows.main_window",
+        "universal_translator.presentation.widgets.floating_translator",
+        "universal_translator.services.hotkey_service",
+        "universal_translator.config.settings_manager",
+        "PySide6.QtCore",
+        "PySide6.QtGui",
+        "PySide6.QtWidgets",
+        "httpx",
+        "pyperclip",
+        "pyautogui",
+        "keyboard",
+        "mouse",
+        "keyring",
+        "sqlite3",
+        "winreg",
+    ],
+    hookspath=[],
+    hooksconfig={},
+    runtime_hooks=[],
+    excludes=["matplotlib", "scipy", "pandas", "numpy", "tkinter"],
+    win_no_prefer_redirects=False,
+    win_private_assemblies=False,
+    cipher=block_cipher,
+    noarchive=False,
+)
+
+pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
+
+exe = EXE(
+    pyz,
+    a.scripts,
+    a.binaries,
+    a.zipfiles,
+    a.datas,
+    [],
+    name="UniversalTranslatorPro",
+    debug=False,
+    bootloader_ignore_signals=False,
+    strip=False,
+    upx=True,
+    upx_exclude=[],
+    runtime_tmpdir=None,
+    console=False,
+    disable_windowed_traceback=False,
+    argv_emulation=False,
+    target_arch=None,
+    codesign_identity=None,
+    entitlements_file=None,
+    version=str(project_root / "version_info.txt"),
+    icon=str(project_root / "assets" / "icon.ico"),
+)
